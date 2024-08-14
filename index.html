@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!--Bootstrap 5 CDN-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    </head>
+    <body onload="logVisitor()">
+        <!--Navigation Start-->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container container-lg">
+                <a class="navbar-brand">
+                    <img src="https://cdn-icons-png.flaticon.com/128/5145/5145353.png" style="width: 30px;background-color: white;">
+                    Electrokraft
+                </a>
+                <div>
+                    <a href="cart.html" style=" color: aliceblue;"><img src="https://www.shareicon.net/data/128x128/2016/02/07/281223_cart_512x512.png" style="width: 35px;" /> Cart</a>
+
+                    <a href="admin-dashboard.html" style=" color: aliceblue; margin-left:20px"><img src="https://freesvg.org/img/abstract-user-flat-4.png" style="width: 35px;" /> Admin</a>
+    
+                </div>
+            </div>
+        </nav>
+        <!--Navigation End-->
+            <br>
+            <br>
+        <!--Ads Section Start-->
+        <div class="row">
+            <div class="col-6">
+                <img src="https://m.media-amazon.com/images/I/71EoGntO5bL._AC_UF1000,1000_QL80_.jpg" style="width: 300px; margin-top: 100px; margin-left: 60px;">
+            </div>
+            <div class="col-6">
+                <h1 class="text-center" style="margin-top: 200px;">Apple watch<span style="font-size: 60px;"> series<span style="color: red;"> 8</span>
+                </span> 
+                </h1>
+
+                <p class="text-center"> Built with ECG, Pedometer ,water Resistant and Durable 
+                </p>
+
+                <a class="btn btn-primary" style="margin-left: 160px;" onclick="logAdsClick()"> view product</a>
+
+                &nbsp;
+                &nbsp;
+
+                <a href="#" style="text-decoration: none;">Buy Now</a>
+            </div> 
+        </div>
+        <!--Ads Section End-->
+            <br>
+            <br>
+        <!--Product catelog Start-->
+        <div class="container">
+            <h1  class="text-center"> Product Catelog</h1> 
+            <br>
+            <br>
+
+            <div class="row" id="productdata">
+               
+            </div>
+               
+
+                
+
+        </div>
+        <!--product catelog End-->
+        <br>
+        <br>
+        <!--contact details Start-->
+        <div class="container">
+            <h1 class="text-center">For Bulk Orders Contact Info</h1>
+            <p class="text-center"> Order with more than 5 can fill the form below</p>
+                <div class="row">
+                    <div class="col-4">
+                        <br>
+                        <br>
+                        <p>
+                            <b>Address:</b>#123 ,4th,cross ,21st,Main <br>
+                            jayanager 4th T Block,<br>
+                            Bengaluru - 560078
+                        </p>
+
+                        <p>
+                            <b>Email :</b>
+                            asuprith06@gmail.com<br><br>
+                            <b>ph.no :</b>
+                            1234567890
+                        </p>
+                    </div>
+                    <div class="col-8">
+                        <br>
+                        <br>
+                        <p>
+                            <label>Your Name</label>
+                            <input type="name"
+                            class="form-control" id="name" >
+                            <span id="errMsgName" style="color: red;"></span>
+                        </p>
+
+                        <p>
+                            <label>Email</label>
+                            <input type="text"
+                            class="form-control" id="email">
+                            <span id="errMsgEmail" style="color: red;"></span>
+                        </p>
+
+                        <p>
+                            <label>Mobile</label>
+                            <input type="text"
+                            class="form-control" id="mobile">
+                            <span id="errMsgMobile" style="color: red;"></span>
+                        </p>
+
+                        <p> 
+                           <label>Your Query</label>
+                            <textarea class="form-control" id="query"></textarea>
+                            <span id="errMsgQuery" style="color: red;"></span>
+                            
+                        </p>
+
+                        <button class="btn btn-primary" style="width: 100%;" onclick="ValidateContactform()"> submit
+                        </button>
+                        <p id="dispalyMsg"></p>
+
+                        </span>
+                        <br>
+                        <br>
+
+                    </div>
+                </div>
+        </div>        
+        <!--contact details End-->
+
+        <script>
+
+            function ValidateContactform()
+            {
+                //read value from name text box
+                var name = document.getElementById('name').value;
+
+                if(name == '')
+                {
+                    document.getElementById('errMsgName').innerHTML = 'Please Enter Name' 
+                    return false
+                }
+                else
+                {
+                    document.getElementById('errMsgName').innerHTML=''
+                }
+
+                var regxName = /^[A-Za-z. ]+$/
+                var validName = name.match(regxName)
+
+                if(!validName)
+                {
+                    document.getElementById('errMsgName').innerHTML = 'Please Enter Valid Name' 
+                    return false  
+                }
+                else
+                {
+                    document.getElementById('errMsgName').innerHTML=''
+                }
+
+                //read value from Email text box
+                var email =document.getElementById('email').value;
+
+                if(email == '')
+                {
+                    document.getElementById('errMsgEmail').innerHTML = 'Please Enter Email' 
+                    return false
+                }
+                else
+                {
+                    document.getElementById('errMsgEmail').innerHTML=''
+                }
+
+                var regxEmail =  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                
+                var validEmail = email.match(regxEmail)
+
+                if(!validEmail)
+                {
+                    document.getElementById('errMsgEmail').innerHTML = 'please enter valid Email'
+                    return false
+                }
+                else
+                {
+                    document.getElementById('errMsgEmail').innerHTML=''
+                }
+
+                //read value from Mobile text box
+                var mobile =document.getElementById('mobile').value;
+
+                if(mobile == '')
+                {
+                    document.getElementById('errMsgMobile').innerHTML = 'Please Enter Mobile' 
+                    return false
+                }
+                else
+                {
+                    document.getElementById('errMsgMobile').innerHTML=''
+                }
+
+                var regxmobile = /^([0|\+[0-9]{1,5})?([6-9][0-9]{9})$/
+                var validMobile = mobile.match(regxmobile)
+
+                if(!validMobile)
+                {
+                    document.getElementById('errMsgMobile').innerHTML = 'please enter valid Mobile'
+                    return false
+                }
+                else
+                {
+                    document.getElementById('errMsgMobile').innerHTML=''
+                }
+
+                //read value from query text box
+                var query = document.getElementById('query').value;
+                
+                if(query.length>0)
+                {
+                    var regxQuery =/^[A-Za-z0-9#@.,?\- ]+$/
+                    var validQuery = query.match(regxQuery)
+
+                    if(!validQuery)
+                    {
+                    document.getElementById('errMsgQuery').innerHTML = 'Please Enter Query' 
+                    return false
+                    }
+                    else
+                    {
+                    document.getElementById('errMsgQuery').innerHTML=''
+                    }
+                }   
+
+                  //AJAX Code here
+
+                    var xhttpContact = new XMLHttpRequest();
+                    xhttpContact.onreadystatechange = function()
+                    {
+                        if(this.readyState == 4 && this.status == 200)
+                        {
+                            console.log(this.responseText)
+                            var jsonData = JSON.parse(this.responseText)
+
+                            if(jsonData[0].errFlag == 0)
+                            {
+                                document.getElementById('dispalyMsg').innerHTML = '<span style = "color:green">'+jsonData[0].message+'</span>'
+                            }
+                            else
+                            {
+                                document.getElementById('dispalyMsg').innerHTML = jsonData[0].message
+                            }
+
+                        }
+                    }
+                    xhttpContact.open("POST","http://127.0.0.1:8080/save-contact",true)
+                    xhttpContact.setRequestHeader("Content-type","application/x-www-form-urlencoded")
+                    xhttpContact.send('customerName='+name+'&customerEmail='+email+'&customerMobile='+mobile+'&customerQuery='+query)
+
+             //AJAX to Track onclick
+
+            }
+
+
+             //AJAX Code here
+
+             var xhttpproducts = new XMLHttpRequest();
+             xhttpproducts.onreadystatechange = function()
+             {
+                 if(this.readyState == 4 && this.status == 200)
+                 {
+                     console.log(this.responseText)
+                     var jsonData = JSON.parse(this.responseText)
+                    console.log(jsonData)
+                     var productHTML = ''
+                     var productLength = jsonData.length
+
+                    for(var i=0;i<productLength;i++)
+                    {
+                        productHTML+=' <div class="col-3" >'
+                        productHTML+=' <div class="card">'                            
+                        productHTML+='<img src="'+jsonData[i].product_image+'" style="width: 100%;">'
+                        productHTML+='<div class="card-body">'
+                        productHTML+='<h4 class="card-title">'+jsonData[i].product_name+'</h4>'
+                        productHTML+='<p class="card-text">'+jsonData[i].product_description+'</p>'       
+                        productHTML+='<div class="row">'
+                        productHTML+='<div class="col-6">'
+                        productHTML+='<button class="btn btn-primary" onclick="addCart(' + jsonData[i].id + ')" style="width: 100%;">Add to cart</button>'            
+                        productHTML+='</div>'            
+                        productHTML+='<div class="col-6">'
+                        productHTML+='<button onClick="logviewProduct('+1+')" class="btn btn-danger" style="width: 100%;">Buy now</button>'
+                        productHTML+='</div>'
+                        productHTML+='</div>'
+                        productHTML+='</div>'
+                        productHTML+='</div>'
+                        productHTML+='</div>'
+                        productHTML+='</div>'
+                     }
+                 } //end for
+                 document.getElementById('productdata').innerHTML = productHTML
+             }
+             xhttpproducts.open("GET","http://127.0.0.1:8080/products",true)
+             xhttpproducts.send()
+
+             //AJAX to Track onclick
+             
+             function addCart(product_id){
+                //fetch method
+                //var res = fetch(`http://127.0.0.1:8080/save-cart/${product_id}`)
+
+                //AJAX method
+                var xhttpVisitor = new XMLHttpRequest()
+                xhttpVisitor.onreadystatechange = () => {
+                    var jsonData = JSON.parse(this.responseText)
+                    console.log(jsonData)
+                }
+
+                xhttpVisitor.open("GET",`http://127.0.0.1:8080/save-cart/${product_id}`,true)
+                xhttpVisitor.send()
+            }
+            
+             function logAdsClick()
+             {
+                //AJAX Code here
+            var xhttpVisitor = new XMLHttpRequest();
+            xhttpVisitor.onreadystatechange = function()
+            {
+                if(this.readyState == 4 && this.status == 200)
+                {
+                    console.log(this.responseText)
+                    var jsonData = JSON.parse(this.responseText)
+                }
+            }
+            xhttpVisitor.open("GET","http://127.0.0.1:8080/track-ad-click",true)
+            xhttpVisitor.send()
+            }
+
+            function logVisitor()
+            {
+                //AJAX Code here
+                var xhttpVisitor = new XMLHttpRequest();
+                xhttpVisitor.onreadystatechange = function()
+                {
+                    if(this.readyState == 4 && this.status == 200)
+                    {
+                        console.log(this.responseText)
+                        var jsonData = JSON.parse(this.responseText)
+                    }
+                }
+                xhttpVisitor.open("GET","http://127.0.0.1:8080/track-visitors",true)
+                xhttpVisitor.send()
+                //AJAX to Track onclick
+            }
+
+        //
+        function logviewProduct(productId)
+        {
+              //AJAX Code here
+              var xhttpLogProductClick = new XMLHttpRequest();
+              xhttpLogProductClick.onreadystatechange = function()
+              {
+                  if(this.readyState == 4 && this.status == 200)
+                  {
+                      console.log(this.responseText)
+                      var jsonData = JSON.parse(this.responseText)
+                  
+                  }
+              }
+              xhttpLogProductClick.open("GET","http://127.0.0.1:8080/track-product-click/<product_id>",true)
+              xhttpLogProductClick.send()
+              window.location.href = "http://127.0.0.1:5500/product-details.html";
+
+            
+        }
+
+            //AJAX Code for visitor trend
+
+           
+
+        </script>
+    </body>
+</html>

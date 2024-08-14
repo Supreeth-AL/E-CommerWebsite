@@ -1,0 +1,121 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="./cart.css" />
+    <title>My Cart</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container container-lg">
+            <a class="navbar-brand">
+                <img src="https://cdn-icons-png.flaticon.com/128/5145/5145353.png" style="width: 30px;background-color: white;">
+                Electrokraft
+            </a>
+            <div>
+                <a href="index.html" style=" color: aliceblue;"><img src="https://www.shareicon.net/data/128x128/2016/03/21/445364_home_30x30.png" style="width: 35px;" /> Home</a>
+                
+                <a href="admin-dashboard.html" style=" color: aliceblue; margin-left:20px"><img src="https://freesvg.org/img/abstract-user-flat-4.png" style="width: 35px;" /> Admin</a>
+
+            </div>
+        </div>
+    </nav>
+    <div class="cartcnt"> 
+        <h3>My cart</h3>
+        <div>
+            <h4 id="cartCount">0</h4>
+            <img src="https://www.shareicon.net/data/128x128/2016/02/07/281223_cart_512x512.png" style="width: 35px;" />
+        </div>
+    </div>
+
+    <div id="cartContainer">
+    </div>
+
+    <script>
+        var cartanalytics = document.getElementById('cartCount')
+        var cartContainer = document.getElementById('cartContainer')
+
+        async function updateCartList(){
+            const res = await fetch("http://127.0.0.1:8080/cart-items")
+            const data = await res.json()
+            const itemsList = await Promise.all(data.map(async(item) =>{
+                const productData = await fetchProductData(item.product_id)
+                return singleItemDisplay(productData,item.quantity)
+            }))
+
+            cartContainer.innerHTML = itemsList.join('')
+        }
+        
+        updateCartList()
+
+        async function fetchProductData(product_id){
+            const res = await fetch(`http://127.0.0.1:8080/products/${product_id}`)
+            return await res.json()
+        }
+
+        function singleItemDisplay(item,quantity){
+            return `
+                <div id='${item.id}' class="cartItem">
+                    <img src="${item.product_image}" />
+                    <h6>${item.product_name}</h6>
+                    <div class="medium-block" >
+                        <div class="increment">
+                            <h2 onclick="addCart(${item.id})">+</h2>
+                            <h5>${quantity}</h5>
+                            <h2 onclick="removeCart(${item.id})">-</h2>
+                        </div>
+                        <img onclick="deleteCart(${item.id})" id='deletecartitem' src='./images/delete-icon.png' width="50px" height="45px" style=cursor:pointer;/>
+                    </div>
+                </div>
+            `
+        }
+
+        function addCart(product_id){
+            fetch(`http://127.0.0.1:8080/save-cart/${product_id}`)
+            .then(res => res)
+            .then(data => updateCartList())
+        }
+
+        function removeCart(product_id){
+            fetch(`http://127.0.0.1:8080/remove-cart/${product_id}`)
+            .then(res => res)
+            .then(data => {
+                updateCartList()
+                updateCartCount()
+            })
+            
+        }
+
+        function deleteCart(product_id){
+            fetch(`http://127.0.0.1:8080/delete-cart/${product_id}`)
+            .then(res => res)
+            .then(data => {
+                updateCartList()
+                updateCartCount()
+            })
+        }
+        function updateCartCount(){
+            fetch("http://127.0.0.1:8080/cart-count")
+            .then(res => res.json())
+            .then(data => {
+                if(data.cartCnt==0)cartContainer.innerHTML = "<h1>EMPTY CART</h1>"
+                cartanalytics.innerHTML = data.cartCnt
+            })
+        }
+        updateCartCount()
+
+    </script>
+    <footer style="width:100%;position:absolute;bottom:10;">
+        <hr style="margin-left: 40px; margin-right: 40px; margin-top:150px;" >
+    <div>
+        <center>
+            <h6> <img src="https://cdn-icons-png.flaticon.com/128/5145/5145353.png" style="width: 30px;background-color: white;">
+                Electrokraft </h6>
+        </center>
+    </div>
+    </footer>
+
+</body>
+</html>
+

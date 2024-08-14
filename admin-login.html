@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <!--Bootstrap CDN-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    </head>
+    <body>
+
+        <!--Navigation Start-->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container container-lg">
+                <a class="navbar-brand">
+
+                    <img src="https://cdn-icons-png.flaticon.com/128/5145/5145353.png" style="width: 30px;background-color: white;">
+                    Electrokraft
+                </a>
+
+            </div>
+        </nav>
+        <!--Navigation End-->
+
+        <div class="container>">
+            <div class="row">
+                <div class="col-2"></div>
+                <div class="col-8">
+                    <div style="margin-top: 10%;">
+                        <center>
+                            <img src="https://cdn-icons-png.flaticon.com/128/5145/5145353.png">
+                            <h5>Admin Login</h5>
+                        </center>
+                        <p>
+                            <label>Username</label>
+                            <input type="text" class="form-control" id="username">
+                        </p>
+                        <p>
+                            <label>password</label>
+                            <input type="password" class="form-control" id="password">
+                        </p>
+                        <button class="btn btn-primary" style="width: 100%;" onclick="validateLogin()">
+                            Login
+                        </button>
+                        <span style="color:red" id="errMsg">
+
+                        </span>
+                    </div>
+                </div>
+                <div class="col-2"></div>
+            </div>
+        </div>
+
+        <script>
+            function validateLogin()
+            {
+                var username = document.getElementById('username').value 
+                var password = document.getElementById('password').value
+
+                if(username=='')
+                {
+                    document.getElementById('errMsg').innerHTML= 'please enter your name'
+                    return false
+                }
+
+                if(password=='')
+                {
+                    document.getElementById('errMsg').innerHTML= 'please enter your password'
+                    return false
+                }
+
+                //AJAX code here
+
+                var xhttpContactForm = new XMLHttpRequest();
+                xhttpContactForm.onreadystatechange = function()
+                {
+                    if(this.readyState == 4 && this.status == 200)
+                    {
+                        console.log(this.responseText)
+                        var jsonData = JSON.parse(this.responseText)
+
+                        if(jsonData[0].errFlag == 1)
+                        {
+                            document.getElementById('errMsg').innerHTML = jsonData[0].message
+                        }
+                        else
+                        {
+                            window.location.href='admin-dashboard.html'
+                        }
+                    }
+                }
+                xhttpContactForm.open("POST","http://127.0.0.1:8080/validate-cred",true)
+                xhttpContactForm.setRequestHeader("Content-type","application/x-www-form-urlencoded")
+                xhttpContactForm.send('username='+username+'&password='+password)
+
+            }
+
+        </script>
+            
+    </body>
+</html>
